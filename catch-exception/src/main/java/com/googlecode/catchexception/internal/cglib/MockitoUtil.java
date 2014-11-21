@@ -3,7 +3,6 @@ package com.googlecode.catchexception.internal.cglib;
 import org.mockito.Mockito;
 import org.mockito.cglib.proxy.MethodInterceptor;
 import org.mockito.cglib.proxy.MethodProxy;
-import org.mockito.mock.MockCreationSettings;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -126,8 +125,9 @@ public final class MockitoUtil {
             instantiator = getInstantiatorMethod.invoke(instantiatorProvider);
         } catch (NoSuchMethodException e) {
             //try other mechanism
-            final Method getInstantiatorMethod = instantiatorProvider.getClass().getMethod("getInstantiator", MockCreationSettings.class);
-            instantiator = getInstantiatorMethod.invoke(instantiatorProvider, (MockCreationSettings) Mockito.withSettings());
+            Class mockCreationSettingsClazz = Class.forName("org.mockito.mock.MockCreationSettings");
+            final Method getInstantiatorMethod = instantiatorProvider.getClass().getMethod("getInstantiator", mockCreationSettingsClazz);
+            instantiator = getInstantiatorMethod.invoke(instantiatorProvider, mockCreationSettingsClazz.cast(Mockito.withSettings()));
         }
 
         final Constructor constructor = classImposterizerClazz.getDeclaredConstructor(instantiatorClazz);
