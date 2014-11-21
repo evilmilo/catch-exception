@@ -15,11 +15,11 @@
  */
 package com.googlecode.catchexception.internal;
 
-import java.lang.reflect.Modifier;
-
+import com.googlecode.catchexception.internal.cglib.MockitoUtil;
 import org.mockito.cglib.proxy.MethodInterceptor;
 import org.mockito.exceptions.base.MockitoException;
-import org.mockito.internal.creation.jmock.ClassImposterizer;
+
+import java.lang.reflect.Modifier;
 
 /**
  * This {@link ProxyFactory} uses Mockito's jmock package to create proxies that
@@ -56,8 +56,7 @@ public class SubclassProxyFactory implements ProxyFactory {
         T proxy;
         try {
 
-            proxy = (T) ClassImposterizer.INSTANCE.imposterise(interceptor,
-                    targetClass);
+            proxy = (T) MockitoUtil.doJMockitoBit(targetClass, interceptor);
 
         } catch (MockitoException e) {
 

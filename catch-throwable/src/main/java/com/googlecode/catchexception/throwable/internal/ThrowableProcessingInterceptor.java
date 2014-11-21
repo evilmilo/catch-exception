@@ -15,12 +15,11 @@
  */
 package com.googlecode.catchexception.throwable.internal;
 
-import java.lang.reflect.Method;
-
+import com.googlecode.catchexception.throwable.internal.cglib.MockitoUtil;
 import org.mockito.cglib.proxy.MethodInterceptor;
 import org.mockito.cglib.proxy.MethodProxy;
-import org.mockito.internal.creation.DelegatingMockitoMethodProxy;
-import org.mockito.internal.creation.cglib.CGLIBHacker;
+
+import java.lang.reflect.Method;
 
 /**
  * This {@link AbstractThrowableProcessingInvocationHandler} implements {@link MethodInterceptor} for Mockito's cglib
@@ -32,12 +31,6 @@ import org.mockito.internal.creation.cglib.CGLIBHacker;
  */
 public class ThrowableProcessingInterceptor<E extends Throwable> extends
         AbstractThrowableProcessingInvocationHandler<E> implements MethodInterceptor {
-
-    /**
-     * We use this object to change the naming policy that is used by {@link MethodProxy#helper}. The new naming policy
-     * avoids duplicate class definitions.
-     */
-    private CGLIBHacker cglibHacker = new CGLIBHacker();
 
     @SuppressWarnings("javadoc")
     public ThrowableProcessingInterceptor(Object target, Class<E> clazz, boolean assertThrowable) {
@@ -55,7 +48,7 @@ public class ThrowableProcessingInterceptor<E extends Throwable> extends
 
         beforeInvocation();
 
-        cglibHacker.setMockitoNamingPolicy(new DelegatingMockitoMethodProxy(proxy));
+        MockitoUtil.doMockitoBit(proxy);
 
         try {
 

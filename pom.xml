@@ -55,7 +55,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>[1.8.1, 1.10.8]</version>
+        <version>1.10.4<!--[1.8.1, 1.10.8]--></version>
         <!--
           successfully tested versions: 1.8.1, 1.8.2, 1.8.3, 1.8.4, 1.8.5, 1.9.0-rc1, 1.9.0, 1.9.5-rc1, 1.9.5,
                                         1.10.5, 1.10.8
@@ -401,6 +401,7 @@ else {
       <build>
         <plugins>
           <!-- Signing files using GPG -->
+            <!--
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
@@ -415,6 +416,7 @@ else {
               </execution>
             </executions>
           </plugin>
+          -->
         </plugins>
       </build>
     </profile>
